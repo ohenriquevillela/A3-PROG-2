@@ -6,23 +6,20 @@
 #include <stdio.h>
 #include <math.h>
 
-// Protótipos
-
 #define BOSS_MOUTH_OFFSET_X 500.0f
 #define BOSS_MOUTH_OFFSET_Y 25.0f
 
-// Função de tiro corrigida
 static void boss_shoot(Boss* b, Player* p, bullet** all_shots_list_head) {
     if (!b || !p) return;
 
     const float DISTANCIA_FRENTE = 500.0f;  // Distância para FRENTE (a partir do centro do boss)
     const float DISTANCIA_ALTURA = 25.0f;  // Distância para BAIXO (a partir do centro do boss)
 
-    // 1. Calcula a posição inicial do tiro
+    // Calcula a posição inicial do tiro
     float startX = b->x;
     float startY = b->y + DISTANCIA_ALTURA; 
 
-    // 2. Aplica o ajuste horizontal baseado na DIREÇÃO do chefe
+    // Aplica o ajuste horizontal baseado na DIREÇÃO do chefe
     if (b->direcao == BOSS_DIR_RIGHT) {
         startX += DISTANCIA_FRENTE; // Se virado para a direita, SOMA para ir para frente
     } else { // Se virado para a esquerda
@@ -160,7 +157,6 @@ void boss_update(Boss* b, Player* p, bullet** all_shots_list_head, float dt) {
     boss_update_animation(b);
 }
 
-// Função de desenho que estava faltando
 void boss_draw(Boss* b, float camera_x) {
     if (!b || !b->active) return;
     
@@ -175,7 +171,6 @@ void boss_draw(Boss* b, float camera_x) {
     float largura_desenhada = b->frame_widths[b->estado] * BOSS_SCALE * escala_x;
     float altura_desenhada  = b->frame_heights[b->estado] * BOSS_SCALE * escala_y;
     
-    // Como o boss voa, seu 'y' pode ser o centro. Vamos calcular o topo para desenhar.
     float desenha_x = (b->x - camera_x) * escala_x;
     float desenha_y = (b->y - (b->frame_heights[b->estado] * BOSS_SCALE / 2.0f)) * escala_y;
 
